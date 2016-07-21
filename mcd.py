@@ -176,19 +176,19 @@ with open(('McDonalds price list ' + today + '.csv'), 'w', newline='') as csvfil
 							# we analyze the DOM of HTML page to reach the text fragments we need. To find the required piece of HTML, open mcdonalds.ru in Google Chrome, 
 							# click the page element and hit "Inspect". Find the corresponding part of HTML code and select "Copy XPath" 
 							product_name           = g.xpath_text('/html/body/div[1]/main/div[1]/div/div/div/div[1]/h1')
-							product_variant_id	   = str((v + 1))
+							product_variant_id       = str((v + 1))
 							product_variant        = g.xpath_text('/html/body/div[1]/main/div[1]/div/div/div/div[1]/div[1]/ul/li[' + str(v + 1) + ']/button/span')
-							product_price	       = g.xpath_text('//*[@id="tab-product_price-' + str(x) + '-' + str(v) + '"]/h4')
-							product_price	       = product_price.replace(" рубль*", "", 1) # we strip currency symbol leaving only digits
-							product_price	       = product_price.replace(" рубля*", "", 1)
-							product_price	       = product_price.replace(" рублей*", "", 1)
+							product_price           = g.xpath_text('//*[@id="tab-product_price-' + str(x) + '-' + str(v) + '"]/h4')
+							product_price           = product_price.replace(" рубль*", "", 1) # we strip currency symbol leaving only digits
+							product_price           = product_price.replace(" рубля*", "", 1)
+							product_price           = product_price.replace(" рублей*", "", 1)
 							if product_price == "": product_price = "?"
 							product_description    = g.xpath_text('/html/body/div[1]/main/div[1]/div/div/div/div[3]/div[1]')
 							product_description    = product_description.replace("Показать", "", 1) # some minor cleanup of the values
 							product_description    = product_description.replace("Скрыть", "", 1) 
 							product_description    = product_description.replace("Состав и пищевую ценность", "", 2)
-							product_contents	   = g.xpath_text('//*[@id="collapse--composition"]/div')
-							product_pic		       = g.xpath('//*[@id="tab-product-' + str(x) + '-' + str(v) + '"]/img/@src')
+							product_contents       = g.xpath_text('//*[@id="collapse--composition"]/div')
+							product_pic               = g.xpath('//*[@id="tab-product-' + str(x) + '-' + str(v) + '"]/img/@src')
 							writer.writerow(
 								{
 									'city_id':             str(city_id), 
@@ -211,18 +211,18 @@ with open(('McDonalds price list ' + today + '.csv'), 'w', newline='') as csvfil
 					print ('  There is a single variety of product ' + str(x) + ' .')
 					product_id             = str(x)
 					product_name           = g.xpath_text('/html/body/div[1]/main/div[1]/div/div/div/div[1]/h1')
-					product_variant_id	   = ""
-					product_variant	       = ""
-					product_price	       = g.xpath_text('//*[@id="tab-product_price-' + str(x) + '-0"]/h4')
-					product_price	       = product_price.replace(" рубль*", "", 1) # we strip currency symbol leaving only digits
-					product_price	       = product_price.replace(" рубля*", "", 1)
-					product_price	       = product_price.replace(" рублей*", "", 1)
+					product_variant_id       = ""
+					product_variant           = ""
+					product_price           = g.xpath_text('//*[@id="tab-product_price-' + str(x) + '-0"]/h4')
+					product_price           = product_price.replace(" рубль*", "", 1) # we strip currency symbol leaving only digits
+					product_price           = product_price.replace(" рубля*", "", 1)
+					product_price           = product_price.replace(" рублей*", "", 1)
 					product_description    = g.xpath_text('/html/body/div[1]/main/div[1]/div/div/div/div[3]/div[1]')
 					product_description    = product_description.replace("Показать", "", 1) # some minor cleanup of the values
 					product_description    = product_description.replace("Скрыть", "", 1) 
 					product_description    = product_description.replace("Состав и пищевую ценность", "", 2)
-					product_contents	   = g.xpath_text('//*[@id="collapse--composition"]/div')
-					product_pic		       = g.xpath('//*[@id="tab-product-' + str(x) + '-0"]/img/@src')
+					product_contents       = g.xpath_text('//*[@id="collapse--composition"]/div')
+					product_pic               = g.xpath('//*[@id="tab-product-' + str(x) + '-0"]/img/@src')
 					writer.writerow(
 						{
 							'city_id':             str(city_id), 
