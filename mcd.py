@@ -33,7 +33,7 @@ product_pic = ""
 city_name = ""
 
 # here we select cities that need to be checked. We can either check the full range or select ones. Comment out the unnecessary option
-select_cities = range(71, 98) # from city with ID=2 ("Almetyevsk") to ID=98 ("Yaroslavl") 
+select_cities = range(2, 98) # from city with ID=2 ("Almetyevsk") to ID=98 ("Yaroslavl") 
 #select_cities = [42]
 
 # McDonalds has IDs for every product. At the time of writing max code was 96.
@@ -53,14 +53,14 @@ with open(('McDonalds price list ' + today + '.csv'), 'w', newline='') as csvfil
 	writer.writeheader()
 	for city_id in select_cities: # This array holds city IDs and names. I obtained it from dropdown box at McDonalds website:
 		city_name = ""
-		if city_id == 2: city_name = "Альметьевск"
-		if city_id == 3: city_name = "Армавир"
-		if city_id == 4: city_name = "Архангельск"
-		if city_id == 5: city_name = "Астрахань"
-		if city_id == 6: city_name = "Белгород"
-		if city_id == 7: city_name = "Брянск"
-		if city_id == 8: city_name = "Бугульма"
-		if city_id == 9: city_name = "Великие Луки"
+		if city_id == 2:  city_name = "Альметьевск"
+		if city_id == 3:  city_name = "Армавир"
+		if city_id == 4:  city_name = "Архангельск"
+		if city_id == 5:  city_name = "Астрахань"
+		if city_id == 6:  city_name = "Белгород"
+		if city_id == 7:  city_name = "Брянск"
+		if city_id == 8:  city_name = "Бугульма"
+		if city_id == 9:  city_name = "Великие Луки"
 		if city_id == 10: city_name = "Великий Новгород"
 		if city_id == 11: city_name = "Владимир"
 		if city_id == 12: city_name = "Владимирская область"
@@ -176,19 +176,19 @@ with open(('McDonalds price list ' + today + '.csv'), 'w', newline='') as csvfil
 							# we analyze the DOM of HTML page to reach the text fragments we need. To find the required piece of HTML, open mcdonalds.ru in Google Chrome, 
 							# click the page element and hit "Inspect". Find the corresponding part of HTML code and select "Copy XPath" 
 							product_name           = g.xpath_text('/html/body/div[1]/main/div[1]/div/div/div/div[1]/h1')
-							product_variant_id       = str((v + 1))
+							product_variant_id     = str((v + 1))
 							product_variant        = g.xpath_text('/html/body/div[1]/main/div[1]/div/div/div/div[1]/div[1]/ul/li[' + str(v + 1) + ']/button/span')
-							product_price           = g.xpath_text('//*[@id="tab-product_price-' + str(x) + '-' + str(v) + '"]/h4')
-							product_price           = product_price.replace(" рубль*", "", 1) # we strip currency symbol leaving only digits
-							product_price           = product_price.replace(" рубля*", "", 1)
-							product_price           = product_price.replace(" рублей*", "", 1)
+							product_price          = g.xpath_text('//*[@id="tab-product_price-' + str(x) + '-' + str(v) + '"]/h4')
+							product_price          = product_price.replace(" рубль*", "", 1) # we strip currency symbol leaving only digits
+							product_price          = product_price.replace(" рубля*", "", 1)
+							product_price          = product_price.replace(" рублей*", "", 1)
 							if product_price == "": product_price = "?"
 							product_description    = g.xpath_text('/html/body/div[1]/main/div[1]/div/div/div/div[3]/div[1]')
 							product_description    = product_description.replace("Показать", "", 1) # some minor cleanup of the values
 							product_description    = product_description.replace("Скрыть", "", 1) 
 							product_description    = product_description.replace("Состав и пищевую ценность", "", 2)
 							product_contents       = g.xpath_text('//*[@id="collapse--composition"]/div')
-							product_pic               = g.xpath('//*[@id="tab-product-' + str(x) + '-' + str(v) + '"]/img/@src')
+							product_pic            = g.xpath('//*[@id="tab-product-' + str(x) + '-' + str(v) + '"]/img/@src')
 							writer.writerow(
 								{
 									'city_id':             str(city_id), 
@@ -209,20 +209,21 @@ with open(('McDonalds price list ' + today + '.csv'), 'w', newline='') as csvfil
 							product_variant = "null"
 				else:
 					print ('  There is a single variety of product ' + str(x) + ' .')
-					product_id             = str(x)
-					product_name           = g.xpath_text('/html/body/div[1]/main/div[1]/div/div/div/div[1]/h1')
-					product_variant_id       = ""
-					product_variant           = ""
+					product_id              = str(x)
+					product_name            = g.xpath_text('/html/body/div[1]/main/div[1]/div/div/div/div[1]/h1')
+					product_variant_id      = ""
+					product_variant         = ""
 					product_price           = g.xpath_text('//*[@id="tab-product_price-' + str(x) + '-0"]/h4')
 					product_price           = product_price.replace(" рубль*", "", 1) # we strip currency symbol leaving only digits
 					product_price           = product_price.replace(" рубля*", "", 1)
 					product_price           = product_price.replace(" рублей*", "", 1)
-					product_description    = g.xpath_text('/html/body/div[1]/main/div[1]/div/div/div/div[3]/div[1]')
-					product_description    = product_description.replace("Показать", "", 1) # some minor cleanup of the values
-					product_description    = product_description.replace("Скрыть", "", 1) 
-					product_description    = product_description.replace("Состав и пищевую ценность", "", 2)
-					product_contents       = g.xpath_text('//*[@id="collapse--composition"]/div')
-					product_pic               = g.xpath('//*[@id="tab-product-' + str(x) + '-0"]/img/@src')
+					if product_price == "": product_price = "?"
+					product_description     = g.xpath_text('/html/body/div[1]/main/div[1]/div/div/div/div[3]/div[1]')
+					product_description     = product_description.replace("Показать", "", 1) # some minor cleanup of the values
+					product_description     = product_description.replace("Скрыть", "", 1) 
+					product_description     = product_description.replace("Состав и пищевую ценность", "", 2)
+					product_contents        = g.xpath_text('//*[@id="collapse--composition"]/div')
+					product_pic             = g.xpath('//*[@id="tab-product-' + str(x) + '-0"]/img/@src')
 					writer.writerow(
 						{
 							'city_id':             str(city_id), 
